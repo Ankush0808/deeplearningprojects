@@ -3,6 +3,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
+from pathlib import Path
 
 # -------------------------------------------------------------
 # Streamlit Page Config
@@ -12,6 +13,7 @@ st.set_page_config(
     page_icon="🥦",
     layout="centered"
 )
+
 
 # -------------------------------------------------------------
 # Custom Styling (Green Theme)
@@ -60,6 +62,9 @@ st.markdown("""
 # UI Header
 # -------------------------------------------------------------
 st.title("🥦 Vegetable Freshness Detection")
+img_path = Path("C://Users//Lenovo//Downloads//veggies.png")
+st.image(img_path)
+
 # -------------------------------------------------------------
 # File Upload
 # -------------------------------------------------------------
