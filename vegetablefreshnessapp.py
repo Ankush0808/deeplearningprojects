@@ -37,7 +37,7 @@ st.markdown("""
 # UI Header
 # -------------------------------------------------------------
 st.title("🥦 Vegetable Freshness Detection")
-img_path = Path("C://Users//Lenovo//Downloads//veggies.png")
+img_path = Path("veggies.png")
 st.image(img_path)
 
 # -------------------------------------------------------------
