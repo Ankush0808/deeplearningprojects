@@ -4,7 +4,9 @@ from tensorflow.keras.preprocessing import image as keras_image
 import numpy as np
 from PIL import Image
 from pathlib import Path
-
+import boto3
+import tempfile
+import os
 # -------------------------------------------------------------
 # Streamlit Page Config
 # -------------------------------------------------------------
@@ -54,10 +56,27 @@ uploaded_file = st.file_uploader(
 # -------------------------------------------------------------
 @st.cache_resource
 def load_freshness_model():
-    model = load_model("C://Users//Lenovo//Downloads//freshness_model_pretrained.keras")
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=st.secrets["AWS_ACCESS_KEY_ID"],
+        aws_secret_access_key=st.secrets["AWS_SECRET_ACCESS_KEY"],
+        region_name=st.secrets["AWS_DEFAULT_REGION"]
+    )
+
+    bucket_name = "vfdataset"
+    object_key = "freshness_model_pretrained.keras"
+
+    temp_file_path = os.path.join(tempfile.gettempdir(), "freshness_model.keras")
+    s3.download_file(bucket_name, object_key, temp_file_path)
+
+    model = load_model(temp_file_path)
     return model
 
+
+st.write("Loading model...")
 model = load_freshness_model()
+st.success("Model loaded successfully!")
+
 
 # -------------------------------------------------------------
 # Prediction Function
