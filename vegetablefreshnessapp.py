@@ -75,7 +75,9 @@ def load_freshness_model():
     model = load_model(temp_file_path)
     return model
 
-
+st.write("Loading model...")
+model = load_freshness_model()
+st.success("Model loaded successfully!")
 # -------------------------------------------------------------
 # Prediction Function
 # -------------------------------------------------------------
