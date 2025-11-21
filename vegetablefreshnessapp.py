@@ -86,13 +86,26 @@ st.success("Model loaded successfully!")
 def predict_freshness(img: Image.Image):
     if img.mode != "RGB":
         img = img.convert("RGB")
+
+    # Resize and normalize
     img = img.resize((224, 224))
-    x = keras_image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = x / 255.0
-    preds = model.predict(x)
-    score = float(preds[0][0])
-    return score
+    x = np.expand_dims(np.array(img) / 255.0, axis=0).astype(np.float32)
+
+    # Get input and output tensor indices
+    input_idx = model.get_input_details()[0]['index']
+    output_idx = model.get_output_details()[0]['index']
+
+    # Set the input tensor
+    model.set_tensor(input_idx, x)
+
+    # Run inference
+    model.invoke()
+
+    # Get the output tensor
+    preds = model.get_tensor(output_idx)
+
+    # Return scalar value
+    return float(preds[0][0])
 
 # -------------------------------------------------------------
 # Determine which image to use
