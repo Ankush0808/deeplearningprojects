@@ -3,6 +3,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image as keras_image
 import numpy as np
 from PIL import Image
+import tensorflow as tf
 from pathlib import Path
 import boto3
 import tempfile
@@ -70,10 +71,11 @@ def load_freshness_model():
 
     # Download your model from S3
     s3.download_file(bucket_name, object_key, temp_file_path)
+    interpreter = tf.lite.Interpreter(model_path=temp_file_path)
+    interpreter.allocate_tensors()
 
-    # Load the model
-    model = load_model(temp_file_path)
-    return model
+    return interpreter
+
 
 st.write("Loading model...")
 model = load_freshness_model()
