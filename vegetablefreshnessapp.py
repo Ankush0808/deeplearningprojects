@@ -64,7 +64,7 @@ def load_freshness_model():
     )
 
     bucket_name = "veggies-freshness"
-    object_key = "freshness_model_pretrained.keras"
+    object_key = "freshness_model.tflite"
 
     temp_file_path = os.path.join(tempfile.gettempdir(), "temppy.keras")
 
