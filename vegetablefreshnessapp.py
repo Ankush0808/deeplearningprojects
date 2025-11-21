@@ -63,7 +63,7 @@ def load_freshness_model():
         region_name=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
     )
 
-    bucket_name = "vfdataset"
+    bucket_name = "veggies-freshness"
     object_key = "freshness_model_pretrained.keras"
 
     temp_file_path = os.path.join(tempfile.gettempdir(), "freshness_model.keras")
